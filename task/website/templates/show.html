@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock Records{% endblock title %}
+
+{% block content %}
+    <h1>Stock Chart</h1>
+    <div class="dropdown">
+        <select id="tradeCodeSelect">
+            <option value="">Select Chart</option>
+            <option value="line">Line Chart</option>
+            <option value="bar">Bar Chart</option>
+            <option value="pie">Pie Chart</option>
+            <option value="multi">Multi Axis Chart</option>
+        </select>
+        <script>
+        document.getElementById("tradeCodeSelect").addEventListener("change", function() {
+            var selectedValue = this.value;
+        
+            if (selectedValue === "line") {
+                window.location.href = "/line_chart"; 
+            } 
+            if (selectedValue === "multi") {
+                window.location.href = "/stock_chart"; 
+            }
+            if (selectedValue === "pie") {
+                window.location.href = "/pie_chart"; 
+            }
+
+            else if (selectedValue === "bar") {
+                window.location.href = "/bar_chart"; 
+            }
+        });
+    </script>
+    </div>
+    <br>
+    
+{% endblock content %}

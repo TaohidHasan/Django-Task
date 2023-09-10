@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Records{% endblock title %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+<body>
+    <div class="container2">
+        <h1>Update Stock</h1>
+        <form action="{% url 'uprec' stock.id %}" method="post">
+            {% csrf_token %}
+            <label for="">Date </label><br><br>
+            <input type="text" name="date" value="{{stock.date}}"><br><br>
+            <label for="">Update Date</label><br><br>
+            <input type="date" name="date" value="{{stock.date}}"><br><br>
+            <label for="">Trade_Code </label><br><br>
+            <input type="text" name="Trade" value="{{stock.Trade}}"><br><br>
+            <label for="">High </label><br><br>
+            <input type="text" name="High" value="{{stock.High}}"><br><br>
+            <label for="">Low </label><br><br>
+            <input type="text" name="Low" value="{{stock.Low}}"><br><br>
+            <label for="">Open </label><br><br>
+            <input type="text" name="Open" value="{{stock.Open}}"><br><br>
+            <label for="">Close </label><br><br>
+            <input type="text" name="Close" value="{{stock.Close}}"><br><br>
+            <label for="">Volume </label><br><br>
+            <input type="text" name="Volume" value="{{stock.Volume}}"><br><br>
+            <button type="submit" class="btn btn-primary id="new1">Update</button>
+            
+            <a href="/" class="btn btn-primary">Back</a>
+        </form>
+
+    </div>
+</body>
+
+</html>
+{% endblock content %}

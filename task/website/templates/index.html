@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+  
+{% block title %}Add New Stock Records{% endblock title %}
+  
+{% block content %}
+<div class="col-md-12">    
+    <form method="POST" class="post-form" action="/addnew">  
+    {% csrf_token %}  
+    <div class="container">  
+        <div class="col-12">  
+        <h3>Enter Details</h3>  
+        </div>    
+     
+        
+        <div class="mb-3"> 
+            <label>Date:</label>  
+            {{ form.date }}   
+        </div>
+    
+
+        <div class="mb-3"> 
+            <label>Trade_Code:</label>  
+            {{ form.Trade }}   
+        </div>  
+
+        <div class="mb-3"> 
+            <label>High:</label>  
+            {{ form.High }}   
+        </div>
+
+        <div class="mb-3"> 
+            <label>Low:</label>  
+            {{ form.Low }}   
+        </div>
+
+        <div class="mb-3"> 
+            <label>Open:</label>  
+            {{ form.Open }}   
+        </div>
+
+        <div class="mb-3"> 
+            <label>Close:</label>  
+            {{ form.Close }}   
+        </div>
+
+        <div class="mb-3"> 
+            <label>Volume:</label>  
+            {{ form.Volume }}   
+        </div>
+
+        <div class="mb-3"> 
+            <button type="submit" class="btn btn-primary">Submit</button>    
+        </div> 
+    </div>  
+    </form>  
+</div> 
+{% endblock content %}

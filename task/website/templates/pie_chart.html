@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock Chart{% endblock %}
+
+{% block content %}
+<h1>Stock Chart</h1>
+<canvas id="line-chart" width="400" height="200"></canvas>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Trade</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Open</th>
+            <th>Close</th>
+            <th>Volume</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stock in table_data %}
+        <tr>
+            <td>{{ stock.date }}</td>
+            <td>{{ stock.Trade }}</td>
+            <td>{{ stock.High }}</td>
+            <td>{{ stock.Low }}</td>
+            <td>{{ stock.Open }}</td>
+            <td>{{ stock.Close }}</td>
+            <td>{{ stock.Volume }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('line-chart').getContext('2d');
+    var data = {
+        labels: {{ chart_data.labels|safe }},
+        datasets: [{
+            label: 'Close Values',
+            data: {{ chart_data.close_values|safe }},
+            borderColor: 'blue',
+            fill: false,
+        }]
+    };
+
+    var options = {
+        responsive: true,
+    };
+
+    var chart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: options,
+    });
+</script>
+{% endblock %}

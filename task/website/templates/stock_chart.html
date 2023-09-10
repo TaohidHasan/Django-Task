@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock Records{% endblock title %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+<body>
+    <h1>Stock Chart</h1>
+    
+    <div class="dropdown">
+        <select id="tradeCodeSelect">
+            <option value="">Select Trade Code</option>
+            <option value="Trade">Trade</option>
+            <option value="Close">Close</option>
+        </select>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 49%;">
+            <canvas id="line-chart" width="400" height="200"></canvas>
+        </div>
+        <div style="width: 49%;">
+            <canvas id="bar-chart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Trade</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Open</th>
+                <th>Close</th>
+                <th>Volume</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.date }}</td>
+                    <td>{{ stock.Trade }}</td>
+                    <td>{{ stock.High }}</td>
+                    <td>{{ stock.Low }}</td>
+                    <td>{{ stock.Open }}</td>
+                    <td>{{ stock.Close }}</td>
+                    <td>{{ stock.Volume }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        var ctxLine = document.getElementById('line-chart').getContext('2d');
+        var ctxBar = document.getElementById('bar-chart').getContext('2d');
+        var dates = [];
+        var closePrices = [];
+        var volumes = [];
+
+        {% for stock in stocks %}
+            dates.push('{{ stock.date }}');
+            closePrices.push({{ stock.Close }});
+            volumes.push({{ stock.Volume }});
+        {% endfor %}
+
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Close Price',
+                    data: closePrices,
+                    borderColor: 'blue',
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Close Price'
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Volume',
+                    data: volumes,
+                    backgroundColor: 'green',
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Volume'
+                        }
+                    }
+                }
+            }
+        });
+        document.getElementById("tradeCodeSelect").addEventListener("change", function() {
+            var selectedValue = this.value;
+        
+            if (selectedValue === "Trade") {
+                window.location.href = "/trade_chart"; 
+            } else if (selectedValue === "Close") {
+                window.location.href = "/stock_chart"; 
+            }
+        });
+    </script>
+</body>
+</html>
+
+{% endblock content %}
